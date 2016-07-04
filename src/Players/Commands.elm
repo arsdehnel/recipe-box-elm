@@ -6,7 +6,7 @@ import Json.Encode as Encode
 import Task
 import Players.Models exposing (PlayerId, Player)
 import Players.Messages exposing (..)
-
+import Debug
 
 fetchAll : Cmd Msg
 fetchAll =
@@ -69,6 +69,6 @@ memberEncoded player =
 memberDecoder : Decode.Decoder Player
 memberDecoder =
     Decode.object3 Player
-        ("id" := Decode.int)
+        ("id" := Debug.log "playerId" Decode.int)
         ("name" := Decode.string)
         ("level" := Decode.int)

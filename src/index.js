@@ -1,5 +1,9 @@
 'use strict';
 
+var css = require("./styles/main.scss");
+// var __svg__ = { path: './svg/*.svg', name: '[hash].logos.svg' };
+// require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);
+
 // Require index.html so it gets copied to dist
 require('./index.html');
 

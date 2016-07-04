@@ -17,13 +17,13 @@ view boxes =
 
 nav : List Box -> Html Msg
 nav boxes =
-    div [ class "clearfix mb2 white bg-black" ]
-        [ div [ class "left p2" ] [ text "Boxes" ] ]
+    div []
+        [ div [ class "page-title" ] [ text "Boxes" ] ]
 
 
 list : List Box -> Html Msg
 list boxes =
-    div [ class "p2" ]
+    div []
         [ table []
             [ thead []
                 [ tr []
@@ -47,9 +47,9 @@ boxRow box =
         [ td [] [ text (toString box.id) ]
         , td [] [ text box.name ]
         , td [] [ text box.desc ]
-        , td [] [ text (toString box.readOrder) ]
-        , td [] [ text box.statusCode ]
-        , td [] [ text (toString box.userId) ]
+        , td [] [ text (toString box.readorder) ]
+        , td [] [ text box.statuscode ]
+        , td [] [ text (toString box.userid) ]
         , td []
             [ editBtn box ]
         ]
