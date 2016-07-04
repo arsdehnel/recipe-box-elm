@@ -1,4 +1,5 @@
 var path = require("path");
+// var SvgStore = require('webpack-svgstore-plugin');
 
 module.exports = {
   entry: {
@@ -13,12 +14,25 @@ module.exports = {
   },
 
   module: {
+    // plugins: [
+    //   // create svgStore instance object
+    //   new SvgStore({
+    //     // svgo options
+    //     svgoOptions: {
+    //       plugins: [
+    //         { removeTitle: true }
+    //       ]
+    //     }
+    //   })
+    // ],
     loaders: [
       {
         test: /\.(css|scss)$/,
         loaders: [
           'style-loader',
           'css-loader',
+          'postcss-loader',
+          'sass-loader'
         ]
       },
       {

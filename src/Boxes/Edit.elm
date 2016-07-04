@@ -25,22 +25,22 @@ form : Box -> Html.Html Msg
 form box =
     div [ class "m3" ]
         [ h1 [] [ text box.name ]
-        , formLevel box
+        --, formLevel box
         ]
 
 
-formLevel : Box -> Html.Html Msg
-formLevel box =
-    div
-        [ class "clearfix py1"
-        ]
-        [ div [ class "col col-5" ] [ text "Level" ]
-        , div [ class "col col-7" ]
-            [ span [ class "h2 bold" ] [ text (toString box.level) ]
-            , btnLevelDecrease box
-            , btnLevelIncrease box
-            ]
-        ]
+--formLevel : Box -> Html.Html Msg
+--formLevel box =
+--    div
+--        [ class "clearfix py1"
+--        ]
+--        [ div [ class "col col-5" ] [ text "Level" ]
+--        , div [ class "col col-7" ]
+--            [ span [ class "h2 bold" ] [ text (toString box.level) ]
+--            --, btnLevelDecrease box
+--            --, btnLevelIncrease box
+--            ]
+--        ]
 
 
 btnLevelDecrease : Box -> Html.Html Msg

@@ -21,7 +21,7 @@ matchers =
         [ format BoxesRoute (s "")
         , format PlayerRoute (s "players" </> int)
         , format PlayersRoute (s "players")
-        , format BoxRoute (s "players" </> int)
+        , format BoxRoute (s "boxes" </> int)
         , format BoxesRoute (s "boxes")
         ]
 

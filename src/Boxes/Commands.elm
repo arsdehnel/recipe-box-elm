@@ -3,10 +3,11 @@ module Boxes.Commands exposing (..)
 import Http
 import Json.Decode as Decode exposing ((:=))
 import Json.Encode as Encode
+import String
 import Task
 import Boxes.Models exposing (BoxId, Box)
 import Boxes.Messages exposing (..)
-
+import Debug
 
 fetchAll : Cmd Msg
 fetchAll =
@@ -16,17 +17,25 @@ fetchAll =
 
 fetchAllUrl : String
 fetchAllUrl =
-    "http://localhost:4000/api/v1/users/1/boxes"
+    Debug.log "string" "http://localhost:4000/boxes-simple"
 
+stringToInt : Decode.Decoder String -> Decode.Decoder Int
+stringToInt d =
+    Decode.customDecoder d String.toInt
 
 collectionDecoder : Decode.Decoder (List Box)
 collectionDecoder =
     Decode.list memberDecoder
 
+--collectionDecoder : Decode.Decoder (List Box)
+--collectionDecoder =
+--    Decode.object1 identity
+--      ("data" := Decode.list memberDecoder)
+
 
 saveUrl : BoxId -> String
 saveUrl boxId =
-    "http://localhost:4000/api/v1/users/1/boxes/" ++ (toString boxId)
+    "http://localhost:4000/boxes-simple/" ++ (toString boxId)
 
 
 saveTask : Box -> Task.Task Http.Error Box
@@ -59,8 +68,11 @@ memberEncoded box =
     let
         list =
             [ ( "id", Encode.int box.id )
+            , ( "userid", Encode.int box.userid )
             , ( "name", Encode.string box.name )
-            , ( "level", Encode.int box.level )
+            , ( "desc", Encode.string box.desc )
+            , ( "readorder", Encode.int box.readorder )
+            , ( "statuscode", Encode.string box.statuscode )
             ]
     in
         list
@@ -68,7 +80,29 @@ memberEncoded box =
 
 memberDecoder : Decode.Decoder Box
 memberDecoder =
-    Decode.object3 Box
-        ("id" := Decode.int)
+    Decode.object6 Box
+        ("id" := Debug.log "boxId" Decode.int)
+        ("userid" := Decode.int)
         ("name" := Decode.string)
-        ("level" := Decode.int)
+        ("desc" := Decode.string)
+        ("readorder" := Decode.int)
+        ("statuscode" := Decode.string)
+
+--memberDecoder : Decode.Decoder Box
+--memberDecoder =
+--    Decode.object6 Box
+--        ("id" := Decode.string |> stringToInt)
+--        (Decode.at ["attributes", "user-id"] Decode.int)
+--        (Decode.at ["attributes", "name"] Decode.string)
+--        (Decode.at ["attributes", "desc"] Decode.string)
+--        (Decode.at ["attributes", "read-order"] Decode.int)
+--        (Decode.at ["attributes", "status-code"] Decode.string)
+
+--decoder : Decoder Model
+--decoder =
+--  Decode.object5 Model
+--    ("id" := Decode.string |> stringToInt )
+--    (Decode.at ["attributes", "invitation_id"] Decode.int)
+--    (Decode.at ["attributes", "name"] Decode.string)
+--    (Decode.at ["attributes", "provider"] Decode.string)
+--    (Decode.at ["attributes", "provider_user_id"] Decode.string |> stringToInt)        
