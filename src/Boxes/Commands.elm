@@ -17,11 +17,11 @@ fetchAll =
 
 fetchAllUrl : String
 fetchAllUrl =
-    Debug.log "string" "http://localhost:4000/boxes-data"
+    Debug.log "string" "http://localhost:4000/boxes-data-attr"
 
---stringToInt : Decode.Decoder String -> Decode.Decoder Int
---stringToInt d =
---    Decode.customDecoder d String.toInt
+stringToInt : Decode.Decoder String -> Decode.Decoder Int
+stringToInt d =
+    Decode.customDecoder d String.toInt
 
 --collectionDecoder : Decode.Decoder (List Box)
 --collectionDecoder =
@@ -30,12 +30,13 @@ fetchAllUrl =
 collectionDecoder : Decode.Decoder (List Box)
 collectionDecoder =
     Decode.object1 identity
-      ("data" := Decode.list memberDecoder)
+        --("jsonapi" := Decode.string)
+        ("data" := Decode.list memberDecoder)
 
 
 saveUrl : BoxId -> String
 saveUrl boxId =
-    "http://localhost:4000/boxes-data/" ++ (toString boxId)
+    "http://localhost:4000/boxes-data-attr/" ++ (toString boxId)
 
 
 saveTask : Box -> Task.Task Http.Error Box
@@ -77,24 +78,23 @@ memberEncoded box =
         list
             |> Encode.object        
 
+--memberDecoder : Decode.Decoder Box
+--memberDecoder =
+--    Decode.object5 Box
+--        ("id" := Decode.int)
+--        ("user-id" := Decode.int)
+--        ("desc" := Decode.string)
+--        ("name" := Decode.string)
+--        ("order" := Decode.int)
+
 memberDecoder : Decode.Decoder Box
 memberDecoder =
     Decode.object5 Box
-        ("id" := Decode.int)
-        ("user-id" := Decode.int)
-        ("desc" := Decode.string)
-        ("name" := Decode.string)
-        ("order" := Decode.int)
-
---memberDecoder : Decode.Decoder Box
---memberDecoder =
---    Decode.object6 Box
---        ("id" := Decode.string |> stringToInt)
---        (Decode.at ["attributes", "user-id"] Decode.int)
---        (Decode.at ["attributes", "name"] Decode.string)
---        (Decode.at ["attributes", "desc"] Decode.string)
---        (Decode.at ["attributes", "read-order"] Decode.int)
---        (Decode.at ["attributes", "status-code"] Decode.string)
+        ("id" := Decode.string |> stringToInt)
+        (Decode.at ["attributes", "user-id"] Decode.int)
+        (Decode.at ["attributes", "name"] Decode.string)
+        (Decode.at ["attributes", "desc"] Decode.string)
+        (Decode.at ["attributes", "order"] Decode.int)
 
 --decoder : Decoder Model
 --decoder =
