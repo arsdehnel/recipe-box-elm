@@ -7,7 +7,7 @@ import String
 import Task
 import Boxes.Models exposing (BoxId, Box)
 import Boxes.Messages exposing (..)
-import Debug
+--import Debug
 
 fetchAll : Cmd Msg
 fetchAll =
@@ -17,25 +17,25 @@ fetchAll =
 
 fetchAllUrl : String
 fetchAllUrl =
-    Debug.log "string" "http://localhost:4000/boxes-simple"
+    Debug.log "string" "http://localhost:4000/boxes-data"
 
-stringToInt : Decode.Decoder String -> Decode.Decoder Int
-stringToInt d =
-    Decode.customDecoder d String.toInt
-
-collectionDecoder : Decode.Decoder (List Box)
-collectionDecoder =
-    Decode.list memberDecoder
+--stringToInt : Decode.Decoder String -> Decode.Decoder Int
+--stringToInt d =
+--    Decode.customDecoder d String.toInt
 
 --collectionDecoder : Decode.Decoder (List Box)
 --collectionDecoder =
---    Decode.object1 identity
---      ("data" := Decode.list memberDecoder)
+--    Decode.list memberDecoder
+
+collectionDecoder : Decode.Decoder (List Box)
+collectionDecoder =
+    Decode.object1 identity
+      ("data" := Decode.list memberDecoder)
 
 
 saveUrl : BoxId -> String
 saveUrl boxId =
-    "http://localhost:4000/boxes-simple/" ++ (toString boxId)
+    "http://localhost:4000/boxes-data/" ++ (toString boxId)
 
 
 saveTask : Box -> Task.Task Http.Error Box
@@ -68,11 +68,10 @@ memberEncoded box =
     let
         list =
             [ ( "id", Encode.int box.id )
-            , ( "userid", Encode.int box.userid )
+            , ( "userId", Encode.int box.userId )
             , ( "name", Encode.string box.name )
             , ( "desc", Encode.string box.desc )
-            , ( "readorder", Encode.int box.readorder )
-            , ( "statuscode", Encode.string box.statuscode )
+            , ( "order", Encode.int box.order )
             ]
     in
         list
@@ -80,13 +79,12 @@ memberEncoded box =
 
 memberDecoder : Decode.Decoder Box
 memberDecoder =
-    Decode.object6 Box
-        ("id" := Debug.log "boxId" Decode.int)
-        ("userid" := Decode.int)
-        ("name" := Decode.string)
+    Decode.object5 Box
+        ("id" := Decode.int)
+        ("user-id" := Decode.int)
         ("desc" := Decode.string)
-        ("readorder" := Decode.int)
-        ("statuscode" := Decode.string)
+        ("name" := Decode.string)
+        ("order" := Decode.int)
 
 --memberDecoder : Decode.Decoder Box
 --memberDecoder =

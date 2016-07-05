@@ -9,20 +9,18 @@ type alias UserId =
 
 type alias Box =
     { id : BoxId
-    , userid : UserId
+    , userId : UserId
     , name : String
     , desc : String
-    , readorder : Int
-    , statuscode : String
+    , order : Int
     }
 
 
 new : Box
 new =
     { id = 0
-    , userid = 0
+    , userId = 0
     , name = ""
     , desc = "New box"
-    , readorder = 9999
-    , statuscode = "A"
+    , order = 9999
     }

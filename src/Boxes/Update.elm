@@ -35,7 +35,7 @@ changeLevelCommands boxId howMuch =
     let
         cmdForBox existingBox =
             if existingBox.id == boxId then
-                save { existingBox | readOrder = existingBox.readOrder + howMuch }
+                save { existingBox | order = existingBox.order + howMuch }
             else
                 Cmd.none
     in
