@@ -17,25 +17,25 @@ fetchAll =
 
 fetchAllUrl : String
 fetchAllUrl =
-    Debug.log "string" "http://localhost:4000/boxes-simple"
+    Debug.log "string" "http://localhost:4000/boxes-data"
 
 --stringToInt : Decode.Decoder String -> Decode.Decoder Int
 --stringToInt d =
 --    Decode.customDecoder d String.toInt
 
-collectionDecoder : Decode.Decoder (List Box)
-collectionDecoder =
-    Decode.list memberDecoder
-
 --collectionDecoder : Decode.Decoder (List Box)
 --collectionDecoder =
---    Decode.object1 identity
---      ("data" := Decode.list memberDecoder)
+--    Decode.list memberDecoder
+
+collectionDecoder : Decode.Decoder (List Box)
+collectionDecoder =
+    Decode.object1 identity
+      ("data" := Decode.list memberDecoder)
 
 
 saveUrl : BoxId -> String
 saveUrl boxId =
-    "http://localhost:4000/boxes-simple/" ++ (toString boxId)
+    "http://localhost:4000/boxes-data/" ++ (toString boxId)
 
 
 saveTask : Box -> Task.Task Http.Error Box
